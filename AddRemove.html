@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My super nifty to-do list</title>
+<style>
+  /* Optional CSS for styling */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+<h1>My super nifty to-do list</h1>
+<ul id="list"></ul>
+<div>
+  <Input type="text" id="item"/>
+  <button id="add">add</button>
+  <button id="remove">remove</button>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const list = document.getElementById("list");
+  const addBtn = document.getElementById("add");
+  const removeBtn = document.getElementById("remove");
+  const itemInput = document.getElementById("item");
+  
+  let isWhiteBackground = true;
+
+  addBtn.addEventListener("click", function() {
+    const itemText = itemInput.value.trim();
+    if (itemText !== "") {
+      const itemWords = itemText.split(" ");
+      const listItem = document.createElement("li");
+      listItem.textContent = itemText;
+      listItem.style.backgroundColor = isWhiteBackground ? "white" : "yellow";
+      isWhiteBackground = !isWhiteBackground;
+      list.appendChild(listItem);
+      itemInput.value = "";
+    }
+  });
+
+  removeBtn.addEventListener("click", function() {
+    const itemText = itemInput.value.trim().toLowerCase();
+    if (itemText !== "") {
+      const items = list.getElementsByTagName("li");
+      for (let i = 0; i < items.length; i++) {
+        const text = items[i].textContent.toLowerCase();
+        if (text.includes(itemText)) {
+          list.removeChild(items[i]);
+          break;
+        }
+      }
+      itemInput.value = "";
+    }
+  });
+});
+</script>
+</body>
+</html>
